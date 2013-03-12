@@ -2,15 +2,33 @@ package com.seventysevenagency.chat.domain;
 
 import java.util.Set;
 
-public class User {
-	private int id;
-	private String name;
-	private String surname;
-	private String username;
-	private String password;
-	private String email;
-	private Set<Message> messages;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "users")
+public class User {
+	@Id
+	@GeneratedValue
+	@Column(name = "id", unique = true, nullable = false)
+	private int id;
+	@Column(name = "name",  nullable = false)
+	private String name;
+	@Column(name = "surname", nullable = false)
+	private String surname;
+	@Column(name = "username", nullable = false)
+	private String username;
+	@Column(name = "password", nullable = false)
+	private String password;
+	@Column(name = "email", nullable = false)
+	private String email;
+	@OneToMany(mappedBy="user")
+	private Set<Message> messages;	
+	
 	public int getId() {
 		return id;
 	}
@@ -18,7 +36,7 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -26,7 +44,7 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public String getSurname() {
 		return surname;
 	}
@@ -34,7 +52,7 @@ public class User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-
+	
 	public String getUsername() {
 		return username;
 	}
@@ -42,7 +60,7 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
 	public String getPassword() {
 		return password;
 	}
@@ -50,7 +68,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	public String getEmail() {
 		return email;
 	}

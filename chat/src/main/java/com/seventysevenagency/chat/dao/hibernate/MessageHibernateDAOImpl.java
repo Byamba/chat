@@ -10,11 +10,9 @@ import com.seventysevenagency.chat.dao.MessageDAO;
 import com.seventysevenagency.chat.domain.Conversation;
 import com.seventysevenagency.chat.domain.Message;
 import com.seventysevenagency.chat.domain.User;
-import com.seventysevenagency.chat.util.HibernateUtil;
 
 public class MessageHibernateDAOImpl implements MessageDAO {
 
-	@Override
 	public int create(Message message) throws DAOException {
 		int id;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -26,7 +24,6 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 		return id;
 	}
 
-	@Override
 	public void update(Message message) throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
@@ -36,7 +33,6 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 		}
 	}
 
-	@Override
 	public Message find(int id) throws DAOException {
 		Message result = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -45,7 +41,6 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 		return result;
 	}
 
-	@Override
 	public void deleteById(int id) throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
@@ -56,7 +51,6 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Message> findByUser(User user) throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		List<Message> list = null;
@@ -73,14 +67,12 @@ public class MessageHibernateDAOImpl implements MessageDAO {
 		return list;
 	}
 
-	@Override
 	public List<Message> findByConversation(Conversation conversation)
 			throws DAOException {
 		return findByConversationId(conversation.getId());
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Message> findByConversationId(int conversationId)
 			throws DAOException {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();

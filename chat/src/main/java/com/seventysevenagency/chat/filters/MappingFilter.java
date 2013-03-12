@@ -89,7 +89,6 @@ public class MappingFilter implements Filter {
 				return;
 			}
 			UrlMapping urlMapping = mapping.get(url);
-			System.out.println(urlMapping);
 			if (urlMapping == null) {
 				RequestDispatcher view = req
 						.getRequestDispatcher("/jsp/404.jsp");

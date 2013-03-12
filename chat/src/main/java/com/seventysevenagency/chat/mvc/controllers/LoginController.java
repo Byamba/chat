@@ -28,7 +28,6 @@ public class LoginController extends ControllerBase {
 			} else {
 				
 				userDB = new UserHibernateDAOImpl();
-				System.out.println(userDB);
 				User user = userDB.authorize(username, password);
 				if (user != null) {
 					loginModel.addWarning("logged", "Logged");

@@ -8,7 +8,7 @@ public class ApplicationContextSingleton {
 	private static final ApplicationContext applicationContext;
 	static {
 			applicationContext = new ClassPathXmlApplicationContext(
-					"/spring_context.xml");
+					"/spring/config/BeanLocations.xml");
 	}
 
 	public static ApplicationContext get() {
