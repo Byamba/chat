@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 20, 2013 7:48:02 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.seventysevenagency.chat.domain.Message" table="MESSAGES">
+		<id name="id" type="int" access="field">
+			<column name="id" />
+			<generator class="native">
+				<param name="sequence">messages_id_seq</param>
+			</generator>
+		</id>
+		<property name="conversationId" type="int" access="field">
+			<column name="conversation_id" />
+		</property>
+
+		<property name="text" type="java.lang.String" access="field">
+			<column name="text" />
+		</property>
+
+		<property name="date" type="long" access="field">
+			<column name="date" />
+		</property>
+
+		<many-to-one name="user" fetch="select"
+			class="com.seventysevenagency.chat.domain.User">
+			<column name="user_id" not-null="true" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>
