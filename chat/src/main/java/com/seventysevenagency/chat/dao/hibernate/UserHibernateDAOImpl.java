@@ -49,7 +49,6 @@ public class UserHibernateDAOImpl extends BaseHibernateDAO implements UserDAO {
 
 		return user;
 	}
-
 	public User authorize(String username, String password) {
 
 		Query query = getSession()

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.seventysevenagency.chat.dao.UserDAO;
+import com.seventysevenagency.chat.dao.hibernate.BaseHibernateDAO;
 import com.seventysevenagency.chat.dao.hibernate.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.domain.User;
 import com.seventysevenagency.chat.mvc.models.IModel;
