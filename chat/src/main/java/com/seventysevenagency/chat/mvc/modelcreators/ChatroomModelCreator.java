@@ -11,23 +11,23 @@ public class ChatroomModelCreator extends ModelCreator {
 	@Override
 	public IModel createModel(HttpServletRequest request) {
 		String messageText = request.getParameter("message");
-//		String conversation = request.getParameter("conversation");
-		Integer conversationId = 1;
-		//FIXME: implement conversation creation
-//		try {
-//			conversationId = Integer.parseInt(conversation);
-//		} catch (Exception e) {
-//		}
+		String conversation = request.getParameter("conversation");
+		//Integer conversationId = 1;
+		//FIXME: implement conversation creation		
+
 		String logout = request.getParameter("logout");
 
 		ChatroomModel chatroomModel = new ChatroomModel();
-		if (messageText != null && !messageText.isEmpty()) {
-			Message message = new Message();
-			message.setText(messageText);
-			message.setConversationId(conversationId);
-			chatroomModel.setMessage(message);
-		}
-		chatroomModel.setConversationId(conversationId);
+		if (conversation !=null && !conversation.isEmpty()) {
+			Integer conversationId = Integer.valueOf(conversation);
+			chatroomModel.setConversationId(conversationId);
+			if(messageText != null && !messageText.isEmpty()){
+				Message message = new Message();
+				message.setText(messageText);
+				message.setConversationId(conversationId);
+				chatroomModel.setMessage(message);
+			}		
+		}		
 		chatroomModel.setAction(logout);
 
 		return chatroomModel;

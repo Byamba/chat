@@ -1,5 +1,7 @@
 package com.seventysevenagency.chat.dao;
 
+import java.util.List;
+
 import com.seventysevenagency.chat.domain.Conversation;
 
 public interface ConversationDAO {
@@ -8,5 +10,6 @@ public interface ConversationDAO {
 	public int delete(Conversation conversation)  throws DAOException;
 	public Conversation select(Long id)  throws DAOException;
 	public Conversation selectLast()  throws DAOException;
+	public List<Conversation> selectAll();
 	public void update(Conversation conversation) throws DAOException;
 }

@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.seventysevenagency.chat.domain.Conversation;
 import com.seventysevenagency.chat.domain.Message;
 import com.seventysevenagency.chat.domain.User;
 
 public class ChatroomModel extends IModel {
 	private List<Message> messageList;
 	private List<User> activeUsersList;
+	private List<Conversation> conversationList;
 	private String action;
 	private Message message;
 	private Integer conversationId;
@@ -57,6 +59,14 @@ public class ChatroomModel extends IModel {
 
 	public void setActiveUsersList(List<User> activeUsersList) {
 		this.activeUsersList = activeUsersList;
+	}
+
+	public List<Conversation> getConversationList() {
+		return conversationList;
+	}
+
+	public void setConversationList(List<Conversation> conversationList) {
+		this.conversationList = conversationList;
 	}
 
 }

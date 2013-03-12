@@ -77,7 +77,7 @@ public class MappingFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;		
-		String url = req.getRequestURI().replace("/chat", "");
+		String url = req.getRequestURI().replaceFirst("/chat", "");
 
 		if (!url.matches(".*(css|jpg|png|gif|js)")) {
 			if(url.equals("/logout")){
@@ -89,6 +89,8 @@ public class MappingFilter implements Filter {
 				return;
 			}
 			UrlMapping urlMapping = mapping.get(url);
+			System.out.println(urlMapping);
+			System.out.println(url);
 			if (urlMapping == null) {
 				RequestDispatcher view = req
 						.getRequestDispatcher("/jsp/404.jsp");

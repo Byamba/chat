@@ -1,10 +1,21 @@
 package com.seventysevenagency.chat.domain;
 
-import com.seventysevenagency.chat.types.ConversationType.Type;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="conversations")
 public class Conversation {	
+	@Id
+	@GeneratedValue
+	@Column(name="id")
 	private int id;
-	private Type type;
+	@Column(name="type")
+	private String type;
+	@Column(name="name")
 	private String name;
 	public int getId() {
 		return id;
@@ -12,10 +23,10 @@ public class Conversation {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Type getType() {
+	public String getType() {
 		return type;
 	}
-	public void setType(Type mType) {
+	public void setType(String mType) {
 		this.type = mType;
 	}
 	public String getName() {
