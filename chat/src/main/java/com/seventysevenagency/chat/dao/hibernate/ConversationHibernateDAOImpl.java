@@ -1,9 +1,14 @@
 package com.seventysevenagency.chat.dao.hibernate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,8 +56,32 @@ public class ConversationHibernateDAOImpl extends BaseHibernateDAO implements
 
 	}
 
-	public List<Conversation> selectAll() {
-		return getSession().createQuery("FROM Conversation").list();
+	public List<Conversation> selectAllPublic() {
+		return getSession().createQuery("FROM Conversation WHERE type = :type")
+				.setString("type", "public").list();
+	}
+	
+	public List<Conversation> selectAllPrivate(int userId) {
+
+		DetachedCriteria subCriteria = DetachedCriteria.forClass(Message.class);
+		subCriteria.add(Restrictions.eq("id", userId));
+		subCriteria.setProjection(Projections.property("id"));
+		
+		return getSession().createCriteria(Conversation.class).add(Subqueries.propertyEq("id", subCriteria)).list();
+	}
+	
+	public List<Conversation> selectAll(int userId) {
+		ArrayList<Conversation> result = new ArrayList<Conversation>();
+		addConversationsToResult(result, selectAllPublic());
+		addConversationsToResult(result, selectAllPrivate(userId));
+		return result;
+	}
+
+	private void addConversationsToResult(ArrayList<Conversation> result,
+			List<Conversation> publicConversations) {
+		if(publicConversations != null) {
+			result.addAll(publicConversations);
+		}
 	}
 
 }

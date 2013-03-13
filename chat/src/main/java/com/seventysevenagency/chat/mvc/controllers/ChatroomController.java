@@ -29,8 +29,10 @@ public class ChatroomController extends ControllerBase {
 	private MessageDAO messageDAO;
 	@Autowired
 	private ConversationDAO conversationDAO;
+	private User activeUser;
 	public void execute(IModel model, HttpServletRequest request) {
-		String requestMethod = request.getMethod();
+		fetchDataFromSession(request);
+		String requestMethod = request.getMethod();		
 		ChatroomModel chatroomModel = (ChatroomModel) model;
 		int conversationId = 0;
 		try{
@@ -41,7 +43,7 @@ public class ChatroomController extends ControllerBase {
 		userDAO = applicationContext.getBean(UserDAO.class);
 		messageDAO = applicationContext.getBean(MessageDAO.class);	
 		conversationDAO = applicationContext.getBean(ConversationDAO.class);
-		List<Conversation> conversationList = conversationDAO.selectAll();
+		List<Conversation> conversationList = conversationDAO.selectAll(activeUser.getId());
 		if(conversationId == 0){
 			if(!conversationList.isEmpty()){
 				Conversation conversation = conversationList.get(0);
@@ -52,9 +54,7 @@ public class ChatroomController extends ControllerBase {
 		}
 		if (requestMethod.equals("POST") && validateModel(chatroomModel)) {
 			System.out.println(1);
-			HttpSession userSession = request.getSession();
-			int userId = (Integer) userSession.getAttribute("userid");
-				User activeUser = userDAO.findById(userId);
+			
 				Set<Message> messages = activeUser.getMessages();				
 				Message msg =  chatroomModel.getMessage();
 				System.out.println(msg);
@@ -84,6 +84,12 @@ public class ChatroomController extends ControllerBase {
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void fetchDataFromSession(HttpServletRequest request) {
+		HttpSession userSession = request.getSession();
+		int userId = (Integer) userSession.getAttribute("userid");
+			activeUser = userDAO.findById(userId);
 	}
 
 	public boolean validateModel(ChatroomModel chatroomModel) {

@@ -10,6 +10,6 @@ public interface ConversationDAO {
 	public int delete(Conversation conversation)  throws DAOException;
 	public Conversation select(Long id)  throws DAOException;
 	public Conversation selectLast()  throws DAOException;
-	public List<Conversation> selectAll();
+	public List<Conversation> selectAll(int userId);
 	public void update(Conversation conversation) throws DAOException;
 }
