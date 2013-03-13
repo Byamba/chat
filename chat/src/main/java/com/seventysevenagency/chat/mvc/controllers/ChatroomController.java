@@ -31,6 +31,7 @@ public class ChatroomController extends ControllerBase {
 	@Autowired
 	private ConversationDAO conversationDAO;
 	private User activeUser;
+	private List<Conversation> conversationList;
 
 	public void execute(IModel model, HttpServletRequest request) {
 		userDAO = applicationContext.getBean(UserDAO.class);
@@ -45,7 +46,7 @@ public class ChatroomController extends ControllerBase {
 		}catch(Exception e){
 			
 		}		
-		List<Conversation> conversationList = conversationDAO.selectAll(activeUser.getId());
+		conversationList = conversationDAO.selectAll(activeUser.getId());
 		if(conversationId == 0){
 			if(!conversationList.isEmpty()){
 				Conversation conversation = conversationList.get(0);
@@ -54,21 +55,10 @@ public class ChatroomController extends ControllerBase {
 				chatroomModel.setAction("conversation");
 			}	
 		}
-		if (requestMethod.equals("POST") && validateModel(chatroomModel)) {
-			if(request.getParameter("message") != null) {
-				Set<Message> messages = activeUser.getMessages();				
-				Message msg =  chatroomModel.getMessage();
-				msg.setUser(activeUser);
-				long unixTime = System.currentTimeMillis()/1000L;
-				msg.setDate(unixTime);
-				messages.add(msg);
-				userDAO.update(activeUser);
-			} else if(request.getParameter("newConversationName") != null) {
-				Conversation newConversation = new Conversation();
-				newConversation.setName(request.getParameter("newConversationName"));
-				newConversation.setType("public");
-				conversationDAO.create(newConversation);
-			}
+		System.out.println(request.getParameter("newConversationName"));
+		if (requestMethod.equals("POST")) {
+			System.out.println(21);
+			handlePostRequests(request, chatroomModel);
 		} else if (chatroomModel.getAction() != null && chatroomModel.getAction().equals("logout")) {
 			HttpSession userSession = request.getSession();
 			userSession.removeAttribute("userid");
@@ -90,6 +80,26 @@ public class ChatroomController extends ControllerBase {
 			
 		} catch (DAOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void handlePostRequests(HttpServletRequest request,
+			ChatroomModel chatroomModel) {
+		if(validateModel(chatroomModel)) {
+			Set<Message> messages = activeUser.getMessages();				
+			Message msg =  chatroomModel.getMessage();
+			msg.setUser(activeUser);
+			long unixTime = System.currentTimeMillis()/1000L;
+			msg.setDate(unixTime);
+			messages.add(msg);
+			userDAO.update(activeUser);
+		} else if(!request.getParameter("newConversationName").isEmpty()) {
+			System.out.println("12");
+			Conversation newConversation = new Conversation();
+			newConversation.setName(request.getParameter("newConversationName"));
+			newConversation.setType("public");
+			conversationDAO.create(newConversation);
+			conversationList = conversationDAO.selectAll(activeUser.getId());
 		}
 	}
 

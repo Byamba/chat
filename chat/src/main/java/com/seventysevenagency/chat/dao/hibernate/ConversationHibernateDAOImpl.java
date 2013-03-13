@@ -22,8 +22,8 @@ import com.seventysevenagency.chat.domain.Message;
 public class ConversationHibernateDAOImpl extends BaseHibernateDAO implements
 		ConversationDAO {
 
-	public Long create(Conversation conversation) {
-		return (Long) getSession().save(conversation);
+	public int create(Conversation conversation) {
+		return (Integer) getSession().save(conversation);
 	}
 
 	public int deleteById(Long id) {

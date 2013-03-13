@@ -5,7 +5,7 @@ import java.util.List;
 import com.seventysevenagency.chat.domain.Conversation;
 
 public interface ConversationDAO {
-	public Long create(Conversation conversation);
+	public int create(Conversation conversation);
 
 	public int deleteById(Long id);
 
