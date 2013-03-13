@@ -3,7 +3,9 @@
 <%@ page import="com.seventysevenagency.chat.mvc.models.LoginModel"%>
 <body>
 	<div class="container">
-		<legend><h1 class="login-header">Login</h1></legend>
+		<legend>
+			<h1 class="login-header">Login</h1>
+		</legend>
 		<%
 			LoginModel model = (LoginModel) request.getAttribute("model");
 		%>
@@ -30,19 +32,31 @@
 					</p>
 					<button type="submit" class="btn">Sign in</button>
 				</div>
-			</div>	
+			</div>
 			<%
 				String error = model.getWarning("error");
 				if (error != null) {
 			%>
 			<div class="alert alert-error">
 				<button type="button" class="close" data-dismiss="alert">&times;</button>
-				<strong>Warning!</strong> <%= error %>
+				<strong>Warning!</strong>
+				<%=error%>
 			</div>
 
 			<%
+				} else {
+					String msg = request.getParameter("msg");
+					if (msg != null) {
+			%>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<strong>Success!</strong> You have been successfully registered.
+					</div>
+		
+			<%
+					}
 				}
-			%>		
+			%>
 		</form>
 	</div>
 </body>
