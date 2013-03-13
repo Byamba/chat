@@ -3,7 +3,7 @@ package com.seventysevenagency.chat.dao.hibernate;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.seventysevenagency.chat.dao.DAOException;
@@ -11,7 +11,7 @@ import com.seventysevenagency.chat.dao.MessageDAO;
 import com.seventysevenagency.chat.domain.Conversation;
 import com.seventysevenagency.chat.domain.Message;
 import com.seventysevenagency.chat.domain.User;
-@Repository
+@Component
 @Transactional
 public class MessageHibernateDAOImpl extends BaseHibernateDAO implements MessageDAO {
 

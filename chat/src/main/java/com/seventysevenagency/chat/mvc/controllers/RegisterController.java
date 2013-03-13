@@ -3,15 +3,13 @@ package com.seventysevenagency.chat.mvc.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
 import com.seventysevenagency.chat.dao.UserDAO;
-import com.seventysevenagency.chat.dao.hibernate.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.mvc.models.IModel;
 import com.seventysevenagency.chat.mvc.models.RegisterModel;
 
-@Service
+@Component
 public class RegisterController extends ControllerBase {
 	@Autowired
 	private UserDAO userDAO;
@@ -23,8 +21,6 @@ public class RegisterController extends ControllerBase {
 		if (requestMethod.equals("POST")) {
 			// validation new user data and saving to db
 			if (validateModel(registerModel)) {
-				userDAO = applicationContext.getBean(UserDAO.class);
-
 				userDAO.create(registerModel.user);
 				this.redirectUrl = "login?msg=success";
 

@@ -9,15 +9,14 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.seventysevenagency.chat.dao.ConversationDAO;
-import com.seventysevenagency.chat.dao.DAOException;
 import com.seventysevenagency.chat.domain.Conversation;
 import com.seventysevenagency.chat.domain.Message;
 
-@Repository
+@Component
 @Transactional
 public class ConversationHibernateDAOImpl extends BaseHibernateDAO implements
 		ConversationDAO {

@@ -4,18 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.seventysevenagency.chat.dao.UserDAO;
-import com.seventysevenagency.chat.dao.hibernate.BaseHibernateDAO;
-import com.seventysevenagency.chat.dao.hibernate.UserHibernateDAOImpl;
 import com.seventysevenagency.chat.domain.User;
 import com.seventysevenagency.chat.mvc.models.IModel;
 import com.seventysevenagency.chat.mvc.models.LoginModel;
-import com.seventysevenagency.chat.util.ApplicationContextSingleton;
 import com.seventysevenagency.chat.util.ConnectedUsersListener;
-@Service
+@Component
 public class LoginController extends ControllerBase {
 	@Autowired
 	private UserDAO userDAO;
@@ -28,8 +24,6 @@ public class LoginController extends ControllerBase {
 			if (username == "" || password == "") {
 				loginModel.addWarning("error", "Please fill in all fields");
 			} else {
-				
-				userDAO = applicationContext.getBean(UserDAO.class);
 				User user = userDAO.authorize(username, password);
 				if (user != null) {
 					loginModel.addWarning("logged", "Logged");

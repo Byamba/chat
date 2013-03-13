@@ -5,12 +5,12 @@
 	id="WebApp_ID" version="2.5">
 	<display-name>JavaGuruChat</display-name>
 	<context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:/spring/config/BeanLocations.xml</param-value>
-  </context-param>  
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/spring/config/BeanLocations.xml</param-value>
+	</context-param>
 	<listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	<filter>
 		<display-name>LoginFilter</display-name>
 		<filter-name>LoginFilter</filter-name>

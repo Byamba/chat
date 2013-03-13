@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+
 import com.seventysevenagency.chat.mvc.controllers.ChatroomController;
 import com.seventysevenagency.chat.mvc.controllers.IController;
 import com.seventysevenagency.chat.mvc.controllers.LoginController;
@@ -26,6 +28,7 @@ import com.seventysevenagency.chat.mvc.modelcreators.LoginModelCreator;
 import com.seventysevenagency.chat.mvc.modelcreators.ModelCreator;
 import com.seventysevenagency.chat.mvc.modelcreators.RegisterModelCreator;
 import com.seventysevenagency.chat.mvc.models.IModel;
+import com.seventysevenagency.chat.util.ApplicationContextSingleton;
 import com.seventysevenagency.chat.util.ConnectedUsersListener;
 
 /**
@@ -46,7 +49,7 @@ public class MappingFilter implements Filter {
 		UrlMapping loginPage = new UrlMapping();
 		loginPage.setUrl("/login");
 		loginPage.setModelCreator(new LoginModelCreator());
-		loginPage.setController(new LoginController());
+		loginPage.setController(LoginController.class);
 		loginPage.setJsp("/jsp/login.jsp");
 
 		mapping.put(loginPage.getUrl(), loginPage);
@@ -55,7 +58,7 @@ public class MappingFilter implements Filter {
 		UrlMapping registerPage = new UrlMapping();
 		registerPage.setUrl("/register");
 		registerPage.setModelCreator(new RegisterModelCreator());
-		registerPage.setController(new RegisterController());
+		registerPage.setController(RegisterController.class);
 		registerPage.setJsp("/jsp/register.jsp");
 
 		mapping.put(registerPage.getUrl(), registerPage);
@@ -64,7 +67,7 @@ public class MappingFilter implements Filter {
 		UrlMapping chatroomPage = new UrlMapping();
 		chatroomPage.setUrl("/chatroom");
 		chatroomPage.setModelCreator(new ChatroomModelCreator());
-		chatroomPage.setController(new ChatroomController());
+		chatroomPage.setController(ChatroomController.class);
 		chatroomPage.setJsp("/jsp/public_chat.jsp");
 
 		mapping.put(chatroomPage.getUrl(), chatroomPage);
@@ -99,7 +102,9 @@ public class MappingFilter implements Filter {
 				ModelCreator modelCreator = urlMapping.getModelCreator();
 				IModel model = modelCreator.createModel(req);
 
-				IController controller = urlMapping.getController();
+				ApplicationContext applicationContext = ApplicationContextSingleton.get();
+				
+				IController controller = applicationContext.getBean(urlMapping.getController());
 				controller.execute(model, req);
 				String redirectUrl = controller.getRedirectUrl();
 				if(redirectUrl != null) {

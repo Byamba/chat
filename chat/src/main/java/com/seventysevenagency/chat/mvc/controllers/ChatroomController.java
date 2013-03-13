@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
 import com.seventysevenagency.chat.dao.ConversationDAO;
 import com.seventysevenagency.chat.dao.DAOException;
@@ -22,7 +21,7 @@ import com.seventysevenagency.chat.mvc.models.ChatroomModel;
 import com.seventysevenagency.chat.mvc.models.IModel;
 import com.seventysevenagency.chat.util.ConnectedUsersListener;
 
-@Service
+@Component
 public class ChatroomController extends ControllerBase {
 	@Autowired
 	private UserDAO userDAO;
@@ -34,9 +33,6 @@ public class ChatroomController extends ControllerBase {
 	private List<Conversation> conversationList;
 
 	public void execute(IModel model, HttpServletRequest request) {
-		userDAO = applicationContext.getBean(UserDAO.class);
-		messageDAO = applicationContext.getBean(MessageDAO.class);	
-		conversationDAO = applicationContext.getBean(ConversationDAO.class);
 		fetchDataFromSession(request);
 		String requestMethod = request.getMethod();		
 		ChatroomModel chatroomModel = (ChatroomModel) model;
@@ -55,9 +51,9 @@ public class ChatroomController extends ControllerBase {
 				chatroomModel.setAction("conversation");
 			}	
 		}
+		System.out.println(conversationId);
 		System.out.println(request.getParameter("newConversationName"));
 		if (requestMethod.equals("POST")) {
-			System.out.println(21);
 			handlePostRequests(request, chatroomModel);
 		} else if (chatroomModel.getAction() != null && chatroomModel.getAction().equals("logout")) {
 			HttpSession userSession = request.getSession();
@@ -94,7 +90,6 @@ public class ChatroomController extends ControllerBase {
 			messages.add(msg);
 			userDAO.update(activeUser);
 		} else if(!request.getParameter("newConversationName").isEmpty()) {
-			System.out.println("12");
 			Conversation newConversation = new Conversation();
 			newConversation.setName(request.getParameter("newConversationName"));
 			newConversation.setType("public");

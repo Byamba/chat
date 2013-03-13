@@ -6,7 +6,7 @@ import com.seventysevenagency.chat.mvc.modelcreators.ModelCreator;
 public class UrlMapping {
 
 	private ModelCreator modelCreator;
-	private IController controller;
+	private Class controller;
 	private String jsp;
 	private String url;
 
@@ -18,11 +18,11 @@ public class UrlMapping {
 		this.modelCreator = modelCreator;
 	}
 
-	public IController getController() {
+	public Class getController() {
 		return controller;
 	}
 
-	public void setController(IController controller) {
+	public void setController(Class controller) {
 		this.controller = controller;
 	}
 

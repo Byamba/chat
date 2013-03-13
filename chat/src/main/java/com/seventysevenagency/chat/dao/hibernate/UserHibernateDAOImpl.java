@@ -1,13 +1,13 @@
 package com.seventysevenagency.chat.dao.hibernate;
 
 import org.hibernate.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.seventysevenagency.chat.dao.UserDAO;
 import com.seventysevenagency.chat.domain.User;
 import com.seventysevenagency.chat.util.EncryptionHelper;
-@Repository
+@Component
 @Transactional
 public class UserHibernateDAOImpl extends BaseHibernateDAO implements UserDAO {
 
