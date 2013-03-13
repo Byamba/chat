@@ -22,11 +22,11 @@ import com.seventysevenagency.chat.domain.Message;
 public class ConversationHibernateDAOImpl extends BaseHibernateDAO implements
 		ConversationDAO {
 
-	public Long create(Conversation conversation) throws DAOException {
+	public Long create(Conversation conversation) {
 		return (Long) getSession().save(conversation);
 	}
 
-	public int deleteById(Long id) throws DAOException {
+	public int deleteById(Long id) {
 		Query query = getSession().createQuery(
 				"DELETE Conversation WHERE id = :id");
 		query.setParameter("id", id);
@@ -35,23 +35,23 @@ public class ConversationHibernateDAOImpl extends BaseHibernateDAO implements
 		return result;
 	}
 
-	public int delete(Conversation conversation) throws DAOException {
+	public int delete(Conversation conversation) {
 		getSession().delete(conversation);
 		return 1;
 	}
 
-	public Conversation select(Long id) throws DAOException {
+	public Conversation select(Long id) {
 		return (Conversation) getSession()
 				.createQuery("FROM Conversation WHERE id = :id")
 				.setParameter("id", id).uniqueResult();
 	}
 
-	public Conversation selectLast() throws DAOException {
+	public Conversation selectLast() {
 		return (Conversation) getSession().createCriteria(Conversation.class)
 				.addOrder(Order.desc("id")).setMaxResults(1).uniqueResult();
 	}
 
-	public void update(Conversation conversation) throws DAOException {
+	public void update(Conversation conversation) {
 		getSession().update(conversation);
 
 	}

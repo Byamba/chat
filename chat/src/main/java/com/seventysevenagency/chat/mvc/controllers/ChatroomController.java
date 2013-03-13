@@ -54,7 +54,8 @@ public class ChatroomController extends ControllerBase {
 				chatroomModel.setAction("conversation");
 			}	
 		}
-		if (requestMethod.equals("POST") && validateModel(chatroomModel)) {			
+		if (requestMethod.equals("POST") && validateModel(chatroomModel)) {
+			if(request.getParameter("message") != null) {
 				Set<Message> messages = activeUser.getMessages();				
 				Message msg =  chatroomModel.getMessage();
 				msg.setUser(activeUser);
@@ -62,6 +63,12 @@ public class ChatroomController extends ControllerBase {
 				msg.setDate(unixTime);
 				messages.add(msg);
 				userDAO.update(activeUser);
+			} else if(request.getParameter("newConversationName") != null) {
+				Conversation newConversation = new Conversation();
+				newConversation.setName(request.getParameter("newConversationName"));
+				newConversation.setType("public");
+				conversationDAO.create(newConversation);
+			}
 		} else if (chatroomModel.getAction() != null && chatroomModel.getAction().equals("logout")) {
 			HttpSession userSession = request.getSession();
 			userSession.removeAttribute("userid");

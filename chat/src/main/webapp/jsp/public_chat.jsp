@@ -57,6 +57,18 @@
 				</form>
 			</div>
 		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				<form method="POST" action="">
+					<div class="span4">
+						<input type="text" name="newConversationName" required />
+					</div>
+					<div class="span2">
+						<button type="submit" class="btn">Create conversation</button>
+					</div>
+				</form>
+			</div>
+		</div>
 		<div class="navbar">
 			<div class="navbar-inner">
 				<ul class="nav">
@@ -67,7 +79,7 @@
 							int conversationId = conversation.getId();
 							if (currentConversationId == conversationId) {
 					%>
-							<li class="active"><%=conversation.getName()%></li>
+							<li class="active"><a><%=conversation.getName()%></a></li>
 					<%
 							} else {
 					%>
@@ -76,7 +88,6 @@
 							}
 						}
 					%>
-					<li><a href="conversation">Create new conversation</a></li>
 				</ul>
 			</div>
 		</div>
