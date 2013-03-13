@@ -76,6 +76,7 @@
 							}
 						}
 					%>
+					<li><a href="conversation">Create new conversation</a></li>
 				</ul>
 			</div>
 		</div>

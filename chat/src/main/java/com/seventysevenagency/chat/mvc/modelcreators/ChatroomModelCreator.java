@@ -26,7 +26,7 @@ public class ChatroomModelCreator extends ModelCreator {
 		}else{
 			conversationId = 1;
 		}
-		if(messageText != null && !messageText.isEmpty()){
+		if(messageText != null && !messageText.isEmpty()){			
 			Message message = new Message();
 			message.setText(messageText);
 			message.setConversationId(conversationId);

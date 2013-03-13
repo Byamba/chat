@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.seventysevenagency.chat.dao.ConversationDAO;
 import com.seventysevenagency.chat.dao.DAOException;
@@ -30,7 +31,11 @@ public class ChatroomController extends ControllerBase {
 	@Autowired
 	private ConversationDAO conversationDAO;
 	private User activeUser;
+
 	public void execute(IModel model, HttpServletRequest request) {
+		userDAO = applicationContext.getBean(UserDAO.class);
+		messageDAO = applicationContext.getBean(MessageDAO.class);	
+		conversationDAO = applicationContext.getBean(ConversationDAO.class);
 		fetchDataFromSession(request);
 		String requestMethod = request.getMethod();		
 		ChatroomModel chatroomModel = (ChatroomModel) model;
@@ -39,10 +44,7 @@ public class ChatroomController extends ControllerBase {
 			 conversationId = chatroomModel.getConversationId();
 		}catch(Exception e){
 			
-		}
-		userDAO = applicationContext.getBean(UserDAO.class);
-		messageDAO = applicationContext.getBean(MessageDAO.class);	
-		conversationDAO = applicationContext.getBean(ConversationDAO.class);
+		}		
 		List<Conversation> conversationList = conversationDAO.selectAll(activeUser.getId());
 		if(conversationId == 0){
 			if(!conversationList.isEmpty()){
@@ -52,16 +54,14 @@ public class ChatroomController extends ControllerBase {
 				chatroomModel.setAction("conversation");
 			}	
 		}
-		if (requestMethod.equals("POST") && validateModel(chatroomModel)) {
-			System.out.println(1);
-			
+		if (requestMethod.equals("POST") && validateModel(chatroomModel)) {			
 				Set<Message> messages = activeUser.getMessages();				
 				Message msg =  chatroomModel.getMessage();
-				System.out.println(msg);
 				msg.setUser(activeUser);
 				long unixTime = System.currentTimeMillis()/1000L;
 				msg.setDate(unixTime);
 				messages.add(msg);
+				userDAO.update(activeUser);
 		} else if (chatroomModel.getAction() != null && chatroomModel.getAction().equals("logout")) {
 			HttpSession userSession = request.getSession();
 			userSession.removeAttribute("userid");
