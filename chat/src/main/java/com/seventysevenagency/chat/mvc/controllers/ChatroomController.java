@@ -38,22 +38,26 @@ public class ChatroomController extends ControllerBase {
 		}catch(Exception e){
 			
 		}
-		System.out.println(conversationId);
 		userDAO = applicationContext.getBean(UserDAO.class);
 		messageDAO = applicationContext.getBean(MessageDAO.class);	
 		conversationDAO = applicationContext.getBean(ConversationDAO.class);
 		List<Conversation> conversationList = conversationDAO.selectAll();
 		if(conversationId == 0){
-			Conversation conversation = conversationList.get(0);
-			conversationId = conversation.getId();			
+			if(!conversationList.isEmpty()){
+				Conversation conversation = conversationList.get(0);
+				conversationId = conversation.getId();	
+			}else{
+				chatroomModel.setAction("conversation");
+			}	
 		}
-	
 		if (requestMethod.equals("POST") && validateModel(chatroomModel)) {
+			System.out.println(1);
 			HttpSession userSession = request.getSession();
 			int userId = (Integer) userSession.getAttribute("userid");
 				User activeUser = userDAO.findById(userId);
-				Set<Message> messages = activeUser.getMessages();
+				Set<Message> messages = activeUser.getMessages();				
 				Message msg =  chatroomModel.getMessage();
+				System.out.println(msg);
 				msg.setUser(activeUser);
 				long unixTime = System.currentTimeMillis()/1000L;
 				msg.setDate(unixTime);

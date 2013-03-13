@@ -12,6 +12,7 @@ public class ChatroomModelCreator extends ModelCreator {
 	public IModel createModel(HttpServletRequest request) {
 		String messageText = request.getParameter("message");
 		String conversation = request.getParameter("conversation");
+		Integer conversationId;
 		//Integer conversationId = 1;
 		//FIXME: implement conversation creation		
 
@@ -19,14 +20,17 @@ public class ChatroomModelCreator extends ModelCreator {
 
 		ChatroomModel chatroomModel = new ChatroomModel();
 		if (conversation !=null && !conversation.isEmpty()) {
-			Integer conversationId = Integer.valueOf(conversation);
+			conversationId = Integer.valueOf(conversation);
 			chatroomModel.setConversationId(conversationId);
-			if(messageText != null && !messageText.isEmpty()){
-				Message message = new Message();
-				message.setText(messageText);
-				message.setConversationId(conversationId);
-				chatroomModel.setMessage(message);
-			}		
+			
+		}else{
+			conversationId = 1;
+		}
+		if(messageText != null && !messageText.isEmpty()){
+			Message message = new Message();
+			message.setText(messageText);
+			message.setConversationId(conversationId);
+			chatroomModel.setMessage(message);
 		}		
 		chatroomModel.setAction(logout);
 

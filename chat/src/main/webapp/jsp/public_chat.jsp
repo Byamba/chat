@@ -65,12 +65,15 @@
 						List<Conversation> conversationList = model.getConversationList();
 						for (Conversation conversation : conversationList) {
 							int conversationId = conversation.getId();
+							if (currentConversationId == conversationId) {
 					%>
-					<li
-						<%=(currentConversationId == conversationId) ? "class='active'"
-						: ""%>><a
-						href="?conversation=<%=conversationId%>"><%=conversation.getName()%></a></li>
+							<li class="active"><%=conversation.getName()%></li>
 					<%
+							} else {
+					%>
+								<li><a href="?conversation=<%=conversationId%>"><%=conversation.getName()%></a></li>
+					<%
+							}
 						}
 					%>
 				</ul>
